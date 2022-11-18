@@ -8285,7 +8285,7 @@ function midLoop(){
                     }
                     else {
                         clearPopper(`q${c_action.id}${idx}`);
-						if (global.settings.qConsume || (c_action['queue_complete'] && c_action.queue_complete())){
+						if (global.settings.qConsume || (c_action['queue_complete'] && !c_action.queue_complete())){
 							global.queue.queue.splice(idx,1);
 						}
                         buildQueue();
@@ -8307,7 +8307,7 @@ function midLoop(){
                         }
                         else {
                             clearPopper(`q${c_action.id}${idx}`);
-                            if (global.settings.qConsume || (c_action['queue_complete'] && c_action.queue_complete())){
+                            if (global.settings.qConsume || (c_action['queue_complete'] && !c_action.queue_complete())){
 								global.queue.queue.splice(idx,1);
 							}
                             buildQueue();
