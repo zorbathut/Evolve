@@ -8285,7 +8285,9 @@ function midLoop(){
                     }
                     else {
                         clearPopper(`q${c_action.id}${idx}`);
-                        global.queue.queue.splice(idx,1);
+						if (global.settings.qConsume){
+							global.queue.queue.splice(idx,1);
+						}
                         buildQueue();
                     }
                 }
@@ -8305,7 +8307,9 @@ function midLoop(){
                         }
                         else {
                             clearPopper(`q${c_action.id}${idx}`);
-                            global.queue.queue.splice(idx,1);
+                            if (global.settings.qConsume){
+								global.queue.queue.splice(idx,1);
+							}
                             buildQueue();
                         }
                         if (global.race['inflation'] && global.tech['primitive']){

@@ -1251,6 +1251,10 @@ if (!global.settings['showPortal']){
     global.settings['showPortal'] = false;
 }
 
+if (!global.settings['qConsume']){
+    global.settings['qConsume'] = true;
+}
+
 if (!global.settings['showOuter']){
     global.settings['showOuter'] = false;
 }
