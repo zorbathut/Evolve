@@ -173,7 +173,7 @@ function calcATime(){
     let timeDiff = dt - global.stats.current;
     if (global.stats.hasOwnProperty('current') && (timeDiff >= 120000 || global.settings.at > 0)){
         if (timeDiff >= 120000){
-            global.settings.at += Math.floor(timeDiff / 1000);
+            global.settings.at += Math.floor(timeDiff / 2000);
         }
     }
 }
