@@ -2370,8 +2370,7 @@ export function clearStates(){
     global.stats.cstone = 0;
     global.stats.clumber = 0;
     global.stats.sac = 0;
-    global.settings.at = 0;
-
+    
     global.settings.showEvolve = true;
     global.settings.showCiv = false;
     global.settings.showCity = false;
