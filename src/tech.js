@@ -7285,7 +7285,7 @@ const techs = {
         title: loc('tech_fanaticism'),
         desc: loc('tech_fanaticism'),
         category: 'religion',
-        era: 'civilized',
+        era: 'decisions',
         wiki: global.genes['transcendence'] ? false : true,
         reqs: { theology: 2 },
         grant: ['theology',3],
@@ -7312,7 +7312,7 @@ const techs = {
         title: loc('tech_fanaticism'),
         desc: loc('tech_fanaticism'),
         category: 'religion',
-        era: 'civilized',
+        era: 'decisions',
         wiki: global.genes['transcendence'] ? true : false,
         reqs: { theology: 2 },
         grant: ['fanaticism',1],
@@ -7364,7 +7364,7 @@ const techs = {
         title: loc('tech_study'),
         desc: loc('tech_study_desc'),
         category: 'religion',
-        era: 'early_space',
+        era: 'decisions',
         reqs: { theology: 4 },
         grant: ['theology',5],
         no_queue(){ return global.r_queue.queue.some(item => item.id === 'tech-deify') ? true : false; },
@@ -7407,7 +7407,7 @@ const techs = {
         title: loc('tech_deify'),
         desc: loc('tech_deify_desc'),
         category: 'religion',
-        era: 'early_space',
+        era: 'decisions',
         reqs: { theology: 4 },
         grant: ['theology',5],
         no_queue(){ return global.r_queue.queue.some(item => item.id === 'tech-study') ? true : false; },
@@ -7509,7 +7509,7 @@ const techs = {
         title: loc('tech_anthropology'),
         desc: loc('tech_anthropology'),
         category: 'religion',
-        era: 'civilized',
+        era: 'decisions',
         wiki: global.genes['transcendence'] ? false : true,
         reqs: { theology: 2 },
         grant: ['theology',3],
@@ -7532,7 +7532,7 @@ const techs = {
         title: loc('tech_anthropology'),
         desc: loc('tech_anthropology'),
         category: 'religion',
-        era: 'civilized',
+        era: 'decisions',
         wiki: global.genes['transcendence'] ? true : false,
         reqs: { theology: 2 },
         grant: ['anthropology',1],
@@ -11780,8 +11780,8 @@ export function swissKnife(cheeseOnly,cheeseList){
 }
 
 export const techPath = {
-    standard: ['primitive', 'discovery', 'civilized', 'industrialized', 'globalized', 'early_space', 'deep_space', 'interstellar', 'intergalactic', 'dimensional'],
-    truepath: ['primitive', 'discovery', 'civilized', 'industrialized', 'globalized', 'early_space', 'deep_space', 'solar', 'tauceti'],
+    standard: ['decisions', 'primitive', 'discovery', 'civilized', 'industrialized', 'globalized', 'early_space', 'deep_space', 'interstellar', 'intergalactic', 'dimensional'],
+    truepath: ['decisions', 'primitive', 'discovery', 'civilized', 'industrialized', 'globalized', 'early_space', 'deep_space', 'solar', 'tauceti'],
 };
 
 export function techList(path){
