@@ -1251,8 +1251,12 @@ if (!global.settings['showPortal']){
     global.settings['showPortal'] = false;
 }
 
-if (!global.settings['qConsume']){
+if (!global.settings.hasOwnProperty('qConsume')){
     global.settings['qConsume'] = true;
+}
+
+if (!global.settings.hasOwnProperty('zCheaty')){
+    global.settings['zCheaty'] = false;
 }
 
 if (!global.settings['showOuter']){
@@ -1461,6 +1465,12 @@ if (typeof global.settings.sPackOn === 'undefined'){
 }
 if (typeof global.settings.qAny_res === 'undefined'){
     global.settings['qAny_res'] = false;
+}
+if (typeof global.settings.qConsume === 'undefined'){
+    global.settings['qConsume'] = true;
+}
+if (typeof global.settings.zCheaty === 'undefined'){
+    global.settings['zCheaty'] = false;
 }
 if (typeof global.settings.sPackMsg === 'undefined'){
     global.settings['sPackMsg'] = false;

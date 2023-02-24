@@ -5334,7 +5334,7 @@ const galaxyProjects = {
     },
 };
 
-export function piracy(region,rating,raw){
+export function piracy(region,rating,raw,rawpirate){
     if (global.tech['piracy'] && !global.race['truepath']){
         let armada = 0;
         let ships = ['dreadnought','cruiser_ship','frigate_ship','corvette_ship','scout_ship'];
@@ -5371,6 +5371,11 @@ export function piracy(region,rating,raw){
                 pirate = global.race['instinct'] ? 7000 : 7500;
                 pillage = 1;
                 break;
+        }
+
+        if (rawpirate)
+        {
+            return pirate;
         }
 
         if (region === 'gxy_stargate' && p_on['defense_platform']){
@@ -5884,6 +5889,9 @@ function galaxySpace(){
                     },
                     defense(r){
                         return piracy(r,true,true);
+                    },
+                    piracy(r){
+                        return piracy(r,false,false,true)
                     }
                 }
             };
@@ -5901,7 +5909,12 @@ function galaxySpace(){
             }
 
             if (global.tech['piracy']){
-                regionContent.append(`<div><span class="has-text-caution pirate">${loc('galaxy_piracy_threat',[races[global.galaxy.alien2.id].name])}</span><span :class="threat('${region}')">{{ '${region}' | pirate }}</span><span class="sep">|</span><span class="has-text-warning">${loc('galaxy_armada')}</span>: <span class="has-text-success">{{ '${region}' | defense }}</span></div>`);
+                let cheaty = ""
+                if (global.settings.zCheaty){
+                    cheaty = `/ {{ '${region}' | piracy }}`
+                }
+
+                regionContent.append(`<div><span class="has-text-caution pirate">${loc('galaxy_piracy_threat',[races[global.galaxy.alien2.id].name])}</span><span :class="threat('${region}')">{{ '${region}' | pirate }}${cheaty}</span><span class="sep">|</span><span class="has-text-warning">${loc('galaxy_armada')}</span>: <span class="has-text-success">{{ '${region}' | defense }}</span></div>`);
             }
 
             vBind(vData);
