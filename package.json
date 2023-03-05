@@ -1,6 +1,6 @@
 {
   "name": "evolveidle",
-  "version": "1.2.20",
+  "version": "1.3.2",
   "description": "Evolve Idle",
   "private": true,
   "scripts": {
@@ -8,8 +8,8 @@
     "less": "lessc -x src/evolve.less evolve/evolve.css",
     "dev": "npx webpack --config webpack.evolve.dev.js",
     "evolve": "npx webpack --config webpack.evolve.prod.js",
-    "build": "npm run evolve && npm run wiki",
-    "build-dev": "npm run dev && npm run wiki-dev",
+    "build": "npx webpack --config webpack.evolve.prod.js && npx webpack --config webpack.wiki.prod.js",
+    "build-dev": "npx webpack --config webpack.evolve.dev.js && npx webpack --config webpack.wiki.dev.js",
     "wiki-dev": "npx webpack --config webpack.wiki.dev.js",
     "wiki": "npx webpack --config webpack.wiki.prod.js",
     "wiki-less": "lessc -x src/wiki/wiki.less wiki/wiki.css",
@@ -37,7 +37,6 @@
   },
   "dependencies": {
     "node": "^16.1.0",
-    "npm": "^9.1.2",
-    "semver": "^7.3.8"
+    "npmcli": "^1.2.2"
   }
 }

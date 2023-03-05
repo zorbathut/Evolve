@@ -3,6 +3,91 @@ import { clearElement } from './../functions.js';
 
 const changeList = [
     {
+        version: `1.3.2`,
+        revision: `a`,
+        date: `3/5/2023`,
+        changes: [
+            `Adjusted hell calculation.`,
+        ]
+    },
+    {
+        version: `1.3.2`,
+        date: `3/4/2023`,
+        changes: [
+            `High-Tech Factory changed back to tool modifier, however value is increased from original 25% to 90%.`,
+            `Advanced Material Synthesis increased from 50% to 65%.`,
+            `Added new interaction between Hell Surveyors and Drone victims.`,
+            `Fixed bug that would cause Replicator Governor task to swap resources when focusing a resource without a cap.`,
+            `Fixed inability to produce Chrysotile in Isolation.`
+        ]
+    },
+    {
+        version: `1.3.1`,
+        date: `3/3/2023`,
+        changes: [
+            `Added Advanced Material Synthesis tech to Isolation path.`,
+            `High-Tech Factory crafting bonus changed from a Tool modifier to a direct multiplier.`,
+            `Updated Mass Ejector Optimizer logic.`,
+            `Fixed a bug that broke Cataclysm reset.`,
+            `Fixed fuel calculation bug with Moon Bases and Spaceports.`,
+            `Fixed issue with self replicating Synth and Nano.`,
+            `Fixed bugs with purchasing CRISPR techs in Antimatter universe.`,
+        ]
+    },
+    {
+        version: `1.3.0`,
+        revision: `b`,
+        date: `3/1/2023`,
+        changes: [
+            `Fixed issue with Mass Ejector Optimizer gov task breaking the governor subtab.`,
+        ]
+    },
+    {
+        version: `1.3.0`,
+        revision: `a`,
+        date: `3/1/2023`,
+        changes: [
+            `Fixed Antimatter universe.`,
+        ]
+    },
+    {
+        version: `1.3.0`,
+        date: `3/1/2023`,
+        changes: [
+            `The True Path has been extended, explore Tau Ceti and expand your civilization.`,
+            `Added Perks: Evolve Master and Evolve Grandmaster.`,
+            `Added Distributed Low Power mode setting.`,
+            `Added Precognition CRISPR upgrade.`,
+            `Strong trait now buffs basic jobs but has a weaker effect on manual resource collection.`,
+            `Ships in Truepath can now only be scrapped at the Shipyard.`,
+            `Truepath Sensor Range and Costs adjusted. Range now depends partly on base ship class.`,
+            `Queue stacks now indicate first block vs last blocking resource with a gradient indicator.`,
+            `Added screen reader improvements for blocking resources.`,
+            `You can no longer unlock Anarchist by Cataclysm.`,
+            `Syndicate will now also steal food from Biodomes.`,
+            `Reinforced Shed upgrade now requires unlocking Iron Mining.`,
+            `You must now construct a Titan Habitat before a Titan Mine.`,
+            `Removed dark background effect from modal popups.`,
+            `Increased Entrepreneur Governor trade bonus from 75% to 125% and Bank capacity boost from 10% to 12%.`,
+            `Increased Media Governor morale bonuses and Library bonus.`,
+            `Increased Soldier Governor combat bonus from 5% to 25%.`,
+            `Increased Educator Governor knowledge bonus from 5% to 6%.`,
+            `Increased Spiritualist Governor worker bonus from 10% to 20% and tourism bonus from $2 to $5 per Temple.`,
+            `Increased Noble Governor tax cap bonus from 10% to 20%.`,
+            `Bluecollar Governor now increases output of Coal and Oil power plants and boosts Miners, Smelter, and Oil Derrick.`,
+            `Bureaucrat Governor now provides a slight boost to government effects.`,
+        ]
+    },
+    {
+        version: `1.2.21`,
+        date: `1/10/2023`,
+        changes: [
+            `New Achievement filtering options in Wiki.`,
+            `Updated Chinese lang file.`,
+            `Updated Korean lang file.`
+        ]
+    },
+    {
         version: `1.2.20`,
         date: `9/16/2022`,
         changes: [
@@ -22,7 +107,7 @@ const changeList = [
         revision: `a`,
         date: `8/21/2022`,
         changes: [
-            `Home Planet Orbital structures are now merged with the Moon instead of Red Planet in Catacylsm.`,
+            `Home Planet Orbital structures are now merged with the Moon instead of Red Planet in Cataclysm.`,
         ]
     },
     {

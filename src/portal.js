@@ -5,8 +5,9 @@ import { traits, races } from './races.js';
 import { defineResources, spatialReasoning } from './resources.js';
 import { loadFoundry, jobScale } from './jobs.js';
 import { armyRating, govCivics } from './civics.js';
-import { payCosts, setAction, drawTech, bank_vault } from './actions.js';
+import { payCosts, powerOnNewStruct, setAction, drawTech, bank_vault } from './actions.js';
 import { checkRequirements, incrementStruct } from './space.js';
+import { production } from './prod.js';
 import { govActive } from './governor.js';
 import { loadTab } from './index.js';
 import { loc } from './locale.js';
@@ -57,8 +58,7 @@ const fortressModules = {
             action(){
                 if (payCosts($(this)[0])){
                     incrementStruct('turret','portal');
-                    if (global.city.powered && global.city.power >= $(this)[0].powered()){
-                        global.portal.turret.on++;
+                    if (powerOnNewStruct($(this)[0])){
                         p_on['turret']++;
                         vBind({el: `#fort`},'update');
                     }
@@ -125,9 +125,7 @@ const fortressModules = {
             action(){
                 if (payCosts($(this)[0])){
                     incrementStruct('war_droid','portal');
-                    if (global.city.powered && global.city.power >= $(this)[0].powered()){
-                        global.portal.war_droid.on++;
-                    }
+                    powerOnNewStruct($(this)[0])
                     return true;
                 }
                 return false;
@@ -155,9 +153,7 @@ const fortressModules = {
             action(){
                 if (payCosts($(this)[0])){
                     incrementStruct('repair_droid','portal');
-                    if (global.city.powered && global.city.power >= $(this)[0].powered()){
-                        global.portal.repair_droid.on++;
-                    }
+                    powerOnNewStruct($(this)[0])
                     return true;
                 }
                 return false;
@@ -191,9 +187,7 @@ const fortressModules = {
             action(){
                 if (payCosts($(this)[0])){
                     incrementStruct('war_drone','portal');
-                    if (global.city.powered && global.city.power >= $(this)[0].powered()){
-                        global.portal.war_drone.on++;
-                    }
+                    powerOnNewStruct($(this)[0])
                     return true;
                 }
                 return false;
@@ -224,9 +218,7 @@ const fortressModules = {
             action(){
                 if (payCosts($(this)[0])){
                     incrementStruct('sensor_drone','portal');
-                    if (global.city.powered && global.city.power >= $(this)[0].powered()){
-                        global.portal.sensor_drone.on++;
-                    }
+                    powerOnNewStruct($(this)[0])
                     return true;
                 }
                 return false;
@@ -251,9 +243,7 @@ const fortressModules = {
             action(){
                 if (payCosts($(this)[0])){
                     incrementStruct('attractor','portal');
-                    if (global.city.powered && global.city.power >= $(this)[0].powered()){
-                        global.portal.attractor.on++;
-                    }
+                    powerOnNewStruct($(this)[0])
                     return true;
                 }
                 return false;
@@ -347,9 +337,7 @@ const fortressModules = {
                 if (payCosts($(this)[0])){
                     if (global.portal.soul_forge.count < 1){
                         incrementStruct('soul_forge','portal');
-                        if (global.city.powered && global.city.power >= $(this)[0].powered()){
-                            global.portal.soul_forge.on++;
-                        }
+                        powerOnNewStruct($(this)[0])
                         return true;
                     }
                 }
@@ -379,9 +367,7 @@ const fortressModules = {
             action(){
                 if (payCosts($(this)[0])){
                     incrementStruct('gun_emplacement','portal');
-                    if (global.city.powered && global.city.power >= $(this)[0].powered()){
-                        global.portal.gun_emplacement.on++;
-                    }
+                    powerOnNewStruct($(this)[0])
                     return true;
                 }
                 return false;
@@ -410,9 +396,7 @@ const fortressModules = {
             action(){
                 if (payCosts($(this)[0])){
                     incrementStruct('soul_attractor','portal');
-                    if (global.city.powered && global.city.power >= $(this)[0].powered()){
-                        global.portal.soul_attractor.on++;
-                    }
+                    powerOnNewStruct($(this)[0])
                     return true;
                 }
                 return false;
@@ -555,8 +539,7 @@ const fortressModules = {
                 if (payCosts($(this)[0])){
                     incrementStruct('archaeology','portal');
                     global.civic.archaeologist.display = true;
-                    if (global.city.power >= $(this)[0].powered()){
-                        global.portal.archaeology.on++;
+                    if (powerOnNewStruct($(this)[0])){
                         if (global.civic[global.civic.d_job].workers > 0){
                             let hired = global.civic[global.civic.d_job].workers - jobScale(2) < 0 ? global.civic[global.civic.d_job].workers : jobScale(2);
                             global.civic[global.civic.d_job].workers -= hired;
@@ -595,9 +578,8 @@ const fortressModules = {
             action(){
                 if (payCosts($(this)[0])){
                     incrementStruct('arcology','portal');
-                    if (global.city.power >= $(this)[0].powered()){
+                    if (powerOnNewStruct($(this)[0])){
                         global['resource'][global.race.species].max += 8;
-                        global.portal.arcology.on++;
                     }
                     return true;
                 }
@@ -644,8 +626,7 @@ const fortressModules = {
             action(){
                 if (payCosts($(this)[0])){
                     incrementStruct('hell_forge','portal');
-                    if (global.city.power >= $(this)[0].powered()){
-                        global.portal.hell_forge.on++;
+                    if (powerOnNewStruct($(this)[0])){
                         global.city.smelter.cap += 3;
                         global.city.smelter.Oil += 3;
                         global.city.smelter.Iron += 3;
@@ -943,9 +924,7 @@ const fortressModules = {
             action(){
                 if (payCosts($(this)[0])){
                     incrementStruct('gate_turret','portal');
-                    if (global.city.powered && global.city.power >= $(this)[0].powered()){
-                        global.portal.gate_turret.on++;
-                    }
+                    powerOnNewStruct($(this)[0])
                     return true;
                 }
                 return false;
@@ -962,23 +941,23 @@ const fortressModules = {
             },
             reqs: { hell_gate: 4 },
             powered(){ return powerCostMod(5); },
+            powerBalancer(){
+                return [{ r: 'Infernite', k: 'lpmod' }];
+            },
             cost: {
                 Money(offset){ return spaceCostMultiplier('infernite_mine', offset, 75000000, 1.26, 'portal'); },
                 Alloy(offset){ return spaceCostMultiplier('infernite_mine', offset, 2450000, 1.26, 'portal'); },
                 Orichalcum(offset){ return spaceCostMultiplier('infernite_mine', offset, 1650000, 1.26, 'portal'); },
                 Wrought_Iron(offset){ return spaceCostMultiplier('infernite_mine', offset, 680000, 1.26, 'portal'); },
             },
-            effect(){                
-                let sup = hellSupression('gate');
-                let mining = 0.5 * sup.supress;
+            effect(){
+                let mining = production('infernite_mine');
                 return `<div>${loc('portal_infernite_mine_effect',[+(mining).toFixed(3)])}</div><div class="has-text-caution">${loc('minus_power',[$(this)[0].powered()])}</div>`;
             },
             action(){
                 if (payCosts($(this)[0])){
                     incrementStruct('infernite_mine','portal');
-                    if (global.city.powered && global.city.power >= $(this)[0].powered()){
-                        global.portal.infernite_mine.on++;
-                    }
+                    powerOnNewStruct($(this)[0])
                     return true;
                 }
                 return false;
@@ -1032,72 +1011,66 @@ const fortressModules = {
                 Stanene(offset){ return spaceCostMultiplier('harbour', offset, 17500000, spireCreep(1.18), 'portal'); },
             },
             wide: true,
+            res(){
+                return [
+                    'Oil','Alloy','Polymer','Iridium','Helium_3','Deuterium','Neutronium','Adamantite',
+                    'Infernite','Nano_Tube','Graphene','Stanene','Bolognium','Orichalcum'
+                ];
+            },
+            val(res){
+                switch (res){
+                    case 'Oil':
+                        return 30000;
+                    case 'Alloy':
+                        return 250000;
+                    case 'Polymer':
+                        return 250000;
+                    case 'Iridium':
+                        return 200000;
+                    case 'Helium_3':
+                        return 18000;
+                    case 'Deuterium':
+                        return 12000;
+                    case 'Neutronium':
+                        return 180000;
+                    case 'Adamantite':
+                        return 150000;
+                    case 'Infernite':
+                        return 75000;
+                    case 'Nano_Tube':
+                        return 750000;
+                    case 'Graphene':
+                        return 1200000;
+                    case 'Stanene':
+                        return 1200000;
+                    case 'Bolognium':
+                        return 130000;
+                    case 'Orichalcum':
+                        return 130000;
+                    default:
+                        return 0;
+                }
+            },
             effect(){
                 let storage = '<div class="aTable">';
-                if (global.resource.Oil.display){
-                    let val = sizeApproximation(+(spatialReasoning(30000)).toFixed(0),1);
-                    storage = storage + `<span>${loc('plus_max_resource',[val,global.resource.Oil.name])}</span>`
-                }
-                if (global.resource.Alloy.display){
-                    let val = sizeApproximation(+(spatialReasoning(250000)).toFixed(0),1);
-                    storage = storage + `<span>${loc('plus_max_resource',[val,global.resource.Alloy.name])}</span>`
-                }
-                if (global.resource.Polymer.display){
-                    let val = sizeApproximation(+(spatialReasoning(250000)).toFixed(0),1);
-                    storage = storage + `<span>${loc('plus_max_resource',[val,global.resource.Polymer.name])}</span>`
-                }
-                if (global.resource.Iridium.display){
-                    let val = sizeApproximation(+(spatialReasoning(200000)).toFixed(0),1);
-                    storage = storage + `<span>${loc('plus_max_resource',[val,global.resource.Iridium.name])}</span>`
-                }
-                if (global.resource.Helium_3.display){
-                    let val = sizeApproximation(+(spatialReasoning(18000)).toFixed(0),1);
-                    storage = storage + `<span>${loc('plus_max_resource',[val,global.resource.Helium_3.name])}</span>`
-                }
-                if (global.resource.Deuterium.display){
-                    let val = sizeApproximation(+(spatialReasoning(12000)).toFixed(0),1);
-                    storage = storage + `<span>${loc('plus_max_resource',[val,global.resource.Deuterium.name])}</span>`
-                }
-                if (global.resource.Neutronium.display){
-                    let val = sizeApproximation(+(spatialReasoning(180000)).toFixed(0),1);
-                    storage = storage + `<span>${loc('plus_max_resource',[val,global.resource.Neutronium.name])}</span>`
-                }
-                if (global.resource.Adamantite.display){
-                    let val = sizeApproximation(+(spatialReasoning(150000)).toFixed(0),1);
-                    storage = storage + `<span>${loc('plus_max_resource',[val,global.resource.Adamantite.name])}</span>`
-                }
-                if (global.resource.Infernite.display){
-                    let val = sizeApproximation(+(spatialReasoning(75000)).toFixed(0),1);
-                    storage = storage + `<span>${loc('plus_max_resource',[val,global.resource.Infernite.name])}</span>`
-                }
-                if (global.resource.Nano_Tube.display){
-                    let val = sizeApproximation(+(spatialReasoning(750000)).toFixed(0),1);
-                    storage = storage + `<span>${loc('plus_max_resource',[val,global.resource.Nano_Tube.name])}</span>`
-                }
-                if (global.resource.Graphene.display){
-                    let val = sizeApproximation(+(spatialReasoning(1200000)).toFixed(0),1);
-                    storage = storage + `<span>${loc('plus_max_resource',[val,global.resource.Graphene.name])}</span>`
-                }
-                if (global.resource.Stanene.display){
-                    let val = sizeApproximation(+(spatialReasoning(1200000)).toFixed(0),1);
-                    storage = storage + `<span>${loc('plus_max_resource',[val,global.resource.Stanene.name])}</span>`
-                }
-                if (global.resource.Bolognium.display){
-                    let val = sizeApproximation(+(spatialReasoning(130000)).toFixed(0),1);
-                    storage = storage + `<span>${loc('plus_max_resource',[val,global.resource.Bolognium.name])}</span>`
-                }
-                if (global.resource.Orichalcum.display){
-                    let val = sizeApproximation(+(spatialReasoning(130000)).toFixed(0),1);
-                    storage = storage + `<span>${loc('plus_max_resource',[val,global.resource.Orichalcum.name])}</span>`
-                }
+                for (const res of $(this)[0].res()){
+                    if (global.resource[res].display){
+                        let val = sizeApproximation(+(spatialReasoning($(this)[0].val(res))).toFixed(0),1);
+                        storage = storage + `<span>${loc('plus_max_resource',[val,global.resource[res].name])}</span>`;
+                    }
+                };
                 storage = storage + '</div>';
                 return `<div>${loc('portal_harbour_effect',[1])}</div>${storage}<div class="has-text-caution">${loc('minus_power',[$(this)[0].powered()])}</div>`;
             },
             action(){
                 if (payCosts($(this)[0])){
                     incrementStruct('harbour','portal');
-                    if (global.city.powered && global.city.power >= $(this)[0].powered()){
-                        global.portal.harbour.on++;
+                    if (powerOnNewStruct($(this)[0])){
+                        for (const res of $(this)[0].res()){
+                            if (global.resource[res].display){
+                                global.resource[res].max += (spatialReasoning($(this)[0].val(res)));
+                            }
+                        };
                     }
                     return true;
                 }
@@ -1124,9 +1097,7 @@ const fortressModules = {
             action(){
                 if (payCosts($(this)[0])){
                     incrementStruct('cooling_tower','portal');
-                    if (global.city.powered && global.city.power >= $(this)[0].powered()){
-                        global.portal.cooling_tower.on++;
-                    }
+                    powerOnNewStruct($(this)[0])
                     return true;
                 }
                 return false;
@@ -1288,9 +1259,7 @@ const fortressModules = {
             action(){
                 if (payCosts($(this)[0])){
                     incrementStruct('purifier','portal');
-                    if (global.city.powered && global.city.power >= $(this)[0].powered()){
-                        global.portal.purifier.on++;
-                    }
+                    powerOnNewStruct($(this)[0])
                     return true;
                 }
                 return false;
@@ -2214,7 +2183,8 @@ export function bloodwar(){
                 guns: 0,
                 soul_forge: 0,
                 crafted: 0,
-                turrets: 0
+                turrets: 0,
+                surveyors: 0
             },
         }
     };
@@ -2244,6 +2214,7 @@ export function bloodwar(){
     }
 
     // Drones
+    let drone_kills = 0;
     if (global.tech['portal'] >= 3 && p_on['war_drone']){
         day_report.drones = {};
         for (let i=0; i<p_on['war_drone']; i++){
@@ -2261,6 +2232,7 @@ export function bloodwar(){
                 }
                 drone_report = { encounter: true, kills: killed };
                 day_report.stats.kills.drones += killed;
+                drone_kills += killed;
             }
             day_report.drones[i+1] = drone_report;
         }
@@ -2272,10 +2244,10 @@ export function bloodwar(){
 
     let game_base = global.stats.achieve['technophobe'] && global.stats.achieve.technophobe.l >= 5 ? 9000 : 10000;
     let gem_chance = game_base - global.portal.fortress.pity;
-    if (global.race.universe === 'evil' && global.race.Dark.count > 1){
-        let de = global.race.Dark.count;
-        if (global.race.Harmony.count > 0){
-            de *= 1 + (global.race.Harmony.count * 0.01);
+    if (global.race.universe === 'evil' && global.prestige.Dark.count > 1){
+        let de = global.prestige.Dark.count;
+        if (global.prestige.Harmony.count > 0){
+            de *= 1 + (global.prestige.Harmony.count * 0.01);
         }
         gem_chance -= Math.round(Math.log2(de) * 2);
     }
@@ -2358,7 +2330,9 @@ export function bloodwar(){
                 if (forgeOperating){
                     global.portal.soul_forge.kills += killed;
                 }
-                if (Math.rand(0,gem_chance) === 0){
+                let final_chance = gem_chance - killed + 40;
+                if (final_chance < 75){ final_chance = 75; }
+                if (killed > 0 && Math.rand(0,final_chance) === 0){
                     patrol_report.gem = true;
                     day_report.stats.gems.patrols++;
                     global.resource.Soul_Gem.amount++;
@@ -2528,6 +2502,32 @@ export function bloodwar(){
                 global.portal.carport.damaged += dead;
             }
         }
+
+        day_report.surveyor_finds = {};
+        if (global.civic.hell_surveyor.workers > 0 && drone_kills > 0){
+            for (let i=0; i<global.civic.hell_surveyor.workers; i++){
+                let surv_report = { gem: false, bodies: 0 };
+                let searched = Math.rand(0,Math.round(drone_kills / global.civic.hell_surveyor.workers)) - 10;
+                if (searched > 100){ searched = 100; }
+                else if (searched < 0){ searched = 0; }
+                surv_report.bodies = searched;
+                if (searched > 0){
+                    let final_chance = gem_chance - searched;
+                    if (final_chance < 25){ final_chance = 25; }
+                    if (Math.rand(0,final_chance) === 0){
+                        surv_report.gem = true;
+                        day_report.stats.gems.surveyors++;
+                        global.resource.Soul_Gem.amount++;
+                        global.portal.fortress.pity = 0;
+                        if (!global.resource.Soul_Gem.display){
+                            global.resource.Soul_Gem.display = true;
+                            messageQueue(loc('portal_first_gem'),'info',false,['progress','hell']);
+                        }
+                    }
+                }
+                day_report.surveyor_finds[i+1] = surv_report;
+            }
+        } 
     }
 
     if (global.stats.dkills >= 1000000 && global.tech['gateway'] && !global.tech['hell_pit']){
@@ -4513,6 +4513,7 @@ function drawHellAnalysis(){
                 <div v-show="p.soul_forge"><h2>{{ st.${type}.gems.soul_forge, 'gems_soul_forge', s.average | genericSub }}</h2></div>
                 <div v-show="p.soul_forge"><h2>{{ st.${type}.gems.crafted, 'gems_crafted', s.average | genericSub }}</h2></div>
                 <div v-show="p.gate_turret"><h2>{{ st.${type}.gems.turrets, 'gems_turrets', s.average | genericSub }}</h2></div>
+                <div v-show="p.war_drone && p.carport"><h2>{{ st.${type}.gems.surveyors, 'gems_surveyors', s.average | genericSub }}</h2></div>
             </div>
             <div><h2>{{ st.${type}.wounded, 'wounded', s.average | generic }}</h2></div>
             <div><h2>{{ st.${type}.died, 'died', s.average | generic }}</h2></div>
@@ -4785,8 +4786,6 @@ function drawGraph(info,graphInfo){
         hell_graphs[id].graph.destroy();
     }
     
-    let underscored = graphInfo.name.replaceAll(' ','-');
-    
     let chartCont = $(`<div id="graph-${id}-container" class="graphContainer"></div>`);
     info.append(chartCont);
     chartCont.append(`<div id="graph-${id}-controls" class="graphControls">
@@ -4994,6 +4993,21 @@ function drawHellReports(){
                 }
             });
         }
+
+        if (curr_report.surveyor_finds){
+            Object.keys(curr_report.surveyor_finds).forEach(function(num){
+                let surveyor = curr_report.surveyor_finds[num];
+                let name = loc('hell_report_log_obj_counter',[loc('job_hell_surveyor'),num]);
+
+                let displayText = $(`<p></p>`);
+                displayText.append(`<span>${loc('hell_report_log_search',[name,surveyor.bodies])}</span>`);
+                if (surveyor.gem){
+                    displayText.append(`<span class="has-text-success">${loc('hell_report_log_soul_search',[global.resource.Soul_Gem.name])}</span>`);
+                }
+                info.append(displayText);
+            });
+        }
+
         if (curr_report.revived){
             info.append(`<p>${curr_report.revived > 1 ? loc('hell_report_log_revived_plural',[curr_report.revived]) : loc('hell_report_log_revived')}</p>`);
         }
