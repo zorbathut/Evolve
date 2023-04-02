@@ -870,7 +870,7 @@ export function index(){
     // Top Bar
     $('body').append(`<div id="topBar" class="topBar">
         <h2 class="is-sr-only">Top Bar</h2>
-        <span class="planetWrap"><span class="planet">{{ race.species | planet }}</span><span class="universe" v-show="showUniverse()">{{ race.universe | universe }}</span></span>
+        <span class="planetWrap"><span class="planet">{{ race.species | planet }}</span><span class="universe" v-show="showUniverse()">{{ race.universe | universe }}</span><span class="simulation" v-show="showSim()">${loc(`evo_challenge_simulation`)}</span></span>
         <span class="calendar">
             <span class="infoTimer" id="infoTimer"></span>
             <span v-show="city.calendar.day">
@@ -1204,6 +1204,7 @@ export function index(){
         {i: 'turtle',       f: 'finish_line',       r: 2 },
         {i: 'floppy',       f: 'digital_ascension', r: 2 },
         {i: 'slime',        f: 'slime_lord',        r: 2 },
+        {i: 'lightning',    f: 'annihilation',      r: 2 },
         {i: 'heart',        f: 'valentine',         r: 1 },
         {i: 'clover',       f: 'leprechaun',        r: 1 },
         {i: 'bunny',        f: 'easter',            r: 1 },

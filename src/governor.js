@@ -1,5 +1,5 @@
 import { global, p_on, breakdown } from './vars.js';
-import { vBind, popover, tagEvent, calcQueueMax, calcRQueueMax, clearElement, adjustCosts, decodeStructId, timeCheck, arpaTimeCheck } from './functions.js';
+import { vBind, popover, tagEvent, calcQueueMax, calcRQueueMax, clearElement, adjustCosts, decodeStructId, timeCheck, arpaTimeCheck, hoovedRename } from './functions.js';
 import { races } from './races.js';
 import { actions, checkCityRequirements, housingLabel, wardenLabel, updateQueueNames, checkAffordable } from './actions.js';
 import { govCivics, govTitle } from './civics.js';
@@ -521,7 +521,7 @@ export function drawnGovernOffice(){
         contain.append(trash);
 
         Object.keys(global.race.governor.config.trash).forEach(function(res){
-            trash.append($(`<b-field>${loc(`gov_task_trash_min`,[global.resource[res].name])}<b-numberinput min="0" :max="1000000" v-model="c.trash.${res}.v" :controls="false"></b-numberinput></b-field>`));
+            trash.append($(`<b-field class="trash"><div class="trashButton" role="button" @click="trashStrat('${res}')" v-html="$options.methods.trashLabel('${res}')"></div><b-numberinput min="0" :max="1000000" v-model="c.trash.${res}.v" :controls="false"></b-numberinput></b-field>`));
         });
     }
 
@@ -613,11 +613,17 @@ export function drawnGovernOffice(){
                 let inc = global.race.governor.hasOwnProperty('f') ? global.race.governor.f : 0;
                 let cost = ((10 + inc) ** 2) - 50;
                 return `<div>${loc(`governor_fire`)}</div><div>${cost} ${loc(global.race.universe === 'antimatter' ? `resource_AntiPlasmid_plural_name` : `resource_Plasmid_plural_name`)}</div>`
+            },
+            trashStrat(r){
+                global.race.governor.config.trash[r].s = global.race.governor.config.trash[r].s ? false : true;
+            },
+            trashLabel(r){
+                return loc(global.race.governor.config.trash[r].s ? `gov_task_trash_max` : `gov_task_trash_min`,[global.resource[r].name]);
             }
         },
         filters: {
             label(t){
-                return gov_tasks[t] ? gov_tasks[t].name : loc(`gov_task_${t}`);
+                return gov_tasks[t] ? (typeof gov_tasks[t].name === 'string' ? gov_tasks[t].name : gov_tasks[t].name()) : loc(`gov_task_${t}`);
             }
         }
     });
@@ -1057,7 +1063,7 @@ export const gov_tasks = {
         }
     },
     horseshoe: { // Forge horseshoes
-        name: loc(global.race['sludge'] ? `gov_task_beaker` : `gov_task_horseshoe`),
+        name(){ return loc(`city_${hoovedRename(true)}`,[hoovedRename(false)]); },
         req(){
             return global.race['hooved'] ? true : false;
         },
@@ -1096,12 +1102,15 @@ export const gov_tasks = {
                 if (craft > 0){ craft = 0; }
 
                 if (global.race.governor.config.trash[res] || global.interstellar.mass_ejector.hasOwnProperty(res) && global.resource[res].display && global.resource[res].max > 0 && global.interstellar.mass_ejector[res] + global.resource[res].diff > 0 && global.resource[res].amount + trade - craft >= global.resource[res].max * 0.999 - 1){
-                    let set = (global.resource[res].amount + trade - craft >= global.resource[res].max * 0.999 - 1) 
+                    let set = (global.resource[res].amount + trade - craft >= global.resource[res].max * 0.999 - 1) || (global.race.governor.config.trash[res] && !global.race.governor.config.trash[res].s)
                         ? Math.floor(global.interstellar.mass_ejector[res] + global.resource[res].diff)
                         : 0;
                     
-                    if (global.race.governor.config.trash[res] && set < global.race.governor.config.trash[res].v){
-                        set = global.race.governor.config.trash[res].v;
+                    if (global.race.governor.config.trash[res] && set < global.race.governor.config.trash[res].v && global.race.governor.config.trash[res].s){
+                        set = Math.abs(global.race.governor.config.trash[res].v);
+                    }
+                    else if (global.race.governor.config.trash[res] && !global.race.governor.config.trash[res].s){
+                        set = (global.resource[res].amount + trade - craft >= global.resource[res].max * 0.999 - 1) ? set : set - Math.abs(global.race.governor.config.trash[res].v);
                     }
                     if (set > remain){ set = remain; }
                     if (set < 0){ set = 0; }

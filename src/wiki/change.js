@@ -3,6 +3,73 @@ import { clearElement } from './../functions.js';
 
 const changeList = [
     {
+        version: `1.3.4`,
+        revision: `b`,
+        date: `3/30/2023`,
+        changes: [
+            `Prevented some bugs caused by distributed power mode from occurring.`,
+            `You can now unlock World Domination, Illuminati, Syndicate, and Pacifist in Truepath.`
+        ]
+    },
+    {
+        version: `1.3.4`,
+        revision: `a`,
+        date: `3/25/2023`,
+        changes: [
+            `A restore point is now made if you select isolation protocal.`,
+        ]
+    },
+    {
+        version: `1.3.4`,
+        date: `3/24/2023`,
+        changes: [
+            `Evolving Synth can now chose imitation race from any species killed by an AI Apocalypse.`,
+            `Fixed issue with miscalculating low fuel usage for various power generating structures.`,
+            `Extractor Ship Isolation output boosted by 20%.`,
+            `Added additional Hooved reskins.`,
+            `Fixed various issues with Preload Tab Content.`,
+            `Explorer Ship config is now locked down for Engine, Sensor, and Weapon components.`,
+            `Skilled Servants assigned to craft inactive resources will now be refunded.`,
+        ]
+    },
+    {
+        version: `1.3.3`,
+        revision: `a`,
+        date: `3/20/2023`,
+        changes: [
+            `Fixed a bug that could cause the Test Launch to be unavailable.`,
+        ]
+    },
+    {
+        version: `1.3.3`,
+        date: `3/15/2023`,
+        changes: [
+            `Rebalanced Soul Gem drop mechanics.`,
+            `Added Annihilation Feat.`,
+            `Added additional Mass Ejector Optimizer config mode.`,
+            `Servants are no longer affected by most racial traits.`,
+            `The Lone Survivor can no longer benefit from Hivemind.`,
+            `Fixed High Pop issue with Pit Miners.`,
+            `Fixed bug with unlocking Replicator without a Governor.`,
+        ]
+    },
+    {
+        version: `1.3.2`,
+        revision: `c`,
+        date: `3/8/2023`,
+        changes: [
+            `Fixed cataclysm reset while having preload tab content enabled.`,
+        ]
+    },
+    {
+        version: `1.3.2`,
+        revision: `b`,
+        date: `3/5/2023`,
+        changes: [
+            `Fixed Rock Quarry under industry tab for Smoldering players.`,
+        ]
+    },
+    {
         version: `1.3.2`,
         revision: `a`,
         date: `3/5/2023`,

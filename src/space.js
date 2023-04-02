@@ -7,7 +7,7 @@ import { loadFoundry, jobScale } from './jobs.js';
 import { defineIndustry } from './industry.js';
 import { garrisonSize, describeSoldier, checkControlling, govTitle } from './civics.js';
 import { actions, payCosts, powerOnNewStruct, setAction, setPlanet, storageMultipler, drawTech, bank_vault, updateDesc, actionDesc, templeEffect, casinoEffect, wardenLabel, buildTemplate } from './actions.js';
-import { outerTruth, syndicate } from './truepath.js';
+import { outerTruthTech, syndicate } from './truepath.js';
 import { production, highPopAdjust } from './prod.js';
 import { govActive } from './governor.js';
 import { ascend, terraform } from './resets.js';
@@ -226,7 +226,7 @@ const spaceProjects = {
         moon_base: {
             id: 'space-moon_base',
             title: loc('space_moon_base_title'),
-            desc: `<div>${loc('space_moon_base_desc')}</div><div class="has-text-special">${loc('requires_power')}</div>`,
+            desc(){ return `<div>${loc('space_moon_base_desc')}</div><div class="has-text-special">${loc('requires_power_combo',[global.resource.Oil.name])}</div>`; },
             reqs: { space: 3 },
             cost: {
                 Money(offset){ return spaceCostMultiplier('moon_base', offset, 22000, 1.32); },
@@ -440,7 +440,7 @@ const spaceProjects = {
         spaceport: {
             id: 'space-spaceport',
             title: loc('space_red_spaceport_title'),
-            desc: `<div>${loc('space_red_spaceport_desc')}</div><div class="has-text-special">${loc('requires_power')}</div>`,
+            desc(){ return `<div>${loc('space_red_spaceport_desc')}</div><div class="has-text-special">${loc('requires_power_space',[global.resource.Food.name])}</div>`; },
             reqs: { space: 4 },
             cost: {
                 Money(offset){ return spaceCostMultiplier('spaceport', offset, 47500, 1.32); },
@@ -936,7 +936,7 @@ const spaceProjects = {
         red_factory: {
             id: 'space-red_factory',
             title: loc('space_red_factory_title'),
-            desc: `<div>${loc('space_red_factory_desc')}</div><div class="has-text-special">${loc('requires_power')}</div>`,
+            desc(){ return `<div>${loc('space_red_factory_desc')}</div><div class="has-text-special">${loc('requires_power_combo',[global.resource.Helium_3.name])}</div>`; },
             reqs: { mars: 4 },
             cost: {
                 Money(offset){ return spaceCostMultiplier('red_factory', offset, 75000, 1.32); },
@@ -1155,7 +1155,7 @@ const spaceProjects = {
             },
             effect(){
                 let bonus = global.tech['ancient_study'] ? 0.6 : 0.4;
-                if (global.tech['ancient_deify'] && global.tech['ancient_deify'] >= 2){
+                if (global.tech['ancient_deify'] && global.tech['ancient_deify'] >= 2 && support_on['exotic_lab']){
                     bonus += 0.01 * support_on['exotic_lab'];
                 }
                 if (global.civic.govern.type === 'theocracy' && global.genes['ancients'] && global.genes['ancients'] >= 2 && global.civic.priest.display){
@@ -1714,7 +1714,7 @@ const spaceProjects = {
             id: 'space-outpost',
             title: loc('space_gas_moon_outpost_title'),
             desc(){
-                return `<div>${loc('space_gas_moon_outpost_desc')}</div><div class="has-text-special">${loc('requires_power')}</div>`;
+                return `<div>${loc('space_gas_moon_outpost_desc')}</div><div class="has-text-special">${loc('requires_power_combo',[global.resource.Oil.name])}</div>`;
             },
             reqs: { gas_moon: 1 },
             cost: {
@@ -1845,7 +1845,7 @@ const spaceProjects = {
             id: 'space-space_station',
             title: loc('space_belt_station_title'),
             desc(){
-                return `<div>${loc('space_belt_station_desc')}</div><div class="has-text-special">${loc('requires_power')}</div>`;
+                return `<div>${loc('space_belt_station_desc')}</div><div class="has-text-special">${loc('requires_power_space',[global.resource.Food.name])}</div>`;
             },
             reqs: { asteroid: 2 },
             cost: {
@@ -2293,11 +2293,11 @@ const spaceProjects = {
             }
         },
     },
-    spc_titan: outerTruth.spc_titan,
-    spc_enceladus: outerTruth.spc_enceladus,
-    spc_triton: outerTruth.spc_triton,
-    spc_kuiper: outerTruth.spc_kuiper,
-    spc_eris: outerTruth.spc_eris,
+    spc_titan: outerTruthTech().spc_titan,
+    spc_enceladus: outerTruthTech().spc_enceladus,
+    spc_triton: outerTruthTech().spc_triton,
+    spc_kuiper: outerTruthTech().spc_kuiper,
+    spc_eris: outerTruthTech().spc_eris,
 };
 
 const interstellarProjects = {
@@ -2331,7 +2331,7 @@ const interstellarProjects = {
         starport: {
             id: 'interstellar-starport',
             title: loc('interstellar_alpha_starport_title'),
-            desc: `<div>${loc('interstellar_alpha_starport_desc')}</div><div class="has-text-special">${loc('requires_power')}</div>`,
+            desc(){ return `<div>${loc('interstellar_alpha_starport_desc')}</div><div class="has-text-special">${loc('requires_power_space',[global.resource.Food.name])}</div>`; },
             reqs: { alpha: 1 },
             cost: {
                 Money(offset){ return spaceCostMultiplier('starport', offset, 1000000, 1.3, 'interstellar'); },
@@ -2479,7 +2479,7 @@ const interstellarProjects = {
         fusion: {
             id: 'interstellar-fusion',
             title: loc('interstellar_fusion_title'),
-            desc: `<div>${loc('interstellar_fusion_title')}</div><div class="has-text-special">${loc('space_support',[loc('interstellar_alpha_name')])}</div>`,
+            desc(){ return `<div>${loc('interstellar_fusion_title')}</div><div class="has-text-special">${loc('requires_power_support_combo',[loc('interstellar_alpha_name'),global.resource.Deuterium.name])}</div>`; },
             reqs: { fusion: 1 },
             cost: {
                 Money(offset){ return spaceCostMultiplier('fusion', offset, 990000, 1.28, 'interstellar'); },
@@ -2640,7 +2640,7 @@ const interstellarProjects = {
         int_factory: {
             id: 'interstellar-int_factory',
             title: loc('interstellar_int_factory_title'),
-            desc: `<div>${loc('interstellar_int_factory_title')}</div><div class="has-text-special">${loc('requires_power')}</div>`,
+            desc(){ return `<div>${loc('interstellar_int_factory_title')}</div><div class="has-text-special">${loc('requires_power_combo',[global.resource.Deuterium.name])}</div>`; },
             reqs: { alpha: 4 },
             cost: {
                 Money(offset){ return spaceCostMultiplier('int_factory', offset, 25000000, 1.26, 'interstellar'); },
@@ -2706,7 +2706,7 @@ const interstellarProjects = {
         zoo: {
             id: 'interstellar-zoo',
             title: loc('tech_zoo'),
-            desc: `<div>${loc('tech_zoo')}</div><div class="has-text-special">${loc('space_support',[loc('interstellar_alpha_name')])}</div>`,
+            desc(){ return `<div>${loc('tech_zoo')}</div><div class="has-text-special">${loc('requires_power_support_combo',[loc('interstellar_alpha_name'),global.resource.Food.name])}</div>`; },
             reqs: { zoo: 1 },
             cost: {
                 Money(offset){ return spaceCostMultiplier('zoo', offset, 50000000, 1.24, 'interstellar'); },
@@ -3250,7 +3250,7 @@ const interstellarProjects = {
         neutron_miner: {
             id: 'interstellar-neutron_miner',
             title: loc('interstellar_neutron_miner_title'),
-            desc: `<div>${loc('interstellar_neutron_miner_desc')}</div><div class="has-text-special">${loc('requires_power')}</div>`,
+            desc(){ return `<div>${loc('interstellar_neutron_miner_desc')}</div><div class="has-text-special">${loc('requires_power_combo',[global.resource.Helium_3.name])}</div>`; },
             reqs: { neutron: 1 },
             cost: {
                 Money(offset){ return spaceCostMultiplier('neutron_miner', offset, 1000000, 1.32, 'interstellar'); },
@@ -4055,7 +4055,7 @@ const galaxyProjects = {
         starbase: {
             id: 'galaxy-starbase',
             title: loc('galaxy_starbase'),
-            desc: `<div>${loc('galaxy_starbase')}</div><div class="has-text-special">${loc('requires_power')}</div>`,
+            desc(){ return `<div>${loc('galaxy_starbase')}</div><div class="has-text-special">${loc('requires_power_space',[global.resource.Food.name])}</div>`; },
             reqs: { gateway: 2 },
             cost: {
                 Money(offset){ return spaceCostMultiplier('starbase', offset, 4200000, 1.25, 'galaxy'); },
@@ -4586,7 +4586,7 @@ const galaxyProjects = {
         embassy: {
             id: 'galaxy-embassy',
             title: loc('galaxy_embassy'),
-            desc: `<div>${loc('galaxy_embassy')}</div><div class="has-text-special">${loc('requires_power')}</div>`,
+            desc(){ return `<div>${loc('galaxy_embassy')}</div><div class="has-text-special">${loc('requires_power_combo',[global.resource.Food.name])}</div>`; },
             reqs: { xeno: 4 },
             queue_complete(){ return 1 - global.galaxy.embassy.count; },
             cost: {
@@ -4983,7 +4983,7 @@ const galaxyProjects = {
         foothold: {
             id: 'galaxy-foothold',
             title: loc('galaxy_foothold'),
-            desc: `<div>${loc('galaxy_foothold')}</div><div class="has-text-special">${loc('requires_power')}</div>`,
+            desc(){ return `<div>${loc('galaxy_foothold')}</div><div class="has-text-special">${loc('requires_power_combo',[global.resource.Elerium.name])}</div>`; },
             reqs: { conflict: 1 },
             cost: {
                 Money(offset){ return spaceCostMultiplier('foothold', offset, 25000000, 1.25, 'galaxy'); },
@@ -6354,7 +6354,9 @@ export function ascendLab(wiki){
         if (webWorker.w){
             webWorker.w.terminate();
         }
-        save.setItem('evolveBak',LZString.compressToUTF16(JSON.stringify(global)));
+        if (!global['sim']){
+            save.setItem('evolveBak',LZString.compressToUTF16(JSON.stringify(global)));
+        }
 
         unlockAchieve(`biome_${global.city.biome}`);
         unlockAchieve(`genus_${races[global.race.species].type}`);
@@ -6796,7 +6798,9 @@ export function terraformLab(wiki){
         if (webWorker.w){
             webWorker.w.terminate();
         }
-        save.setItem('evolveBak',LZString.compressToUTF16(JSON.stringify(global)));
+        if (!global['sim']){
+            save.setItem('evolveBak',LZString.compressToUTF16(JSON.stringify(global)));
+        }
 
         unlockAchieve(`biome_${global.city.biome}`);
         unlockAchieve(`genus_${races[global.race.species].type}`);

@@ -77,7 +77,7 @@ export function defineIndustry(){
         $(`#industry`).append(casting);
         loadIndustry('pylon',casting,'#iPylon');
     }
-    if (global.race['smoldering'] && global.city['rock_quarry'] && !global.race['cataclysm'] && !global.race['orbit_decayed'] && ![global.race['isolation']]){
+    if (global.race['smoldering'] && global.city['rock_quarry'] && !global.race['cataclysm'] && !global.race['orbit_decayed'] && !global.tech['isolation']){
         var ratio = $(`<div id="iQuarry" class="industry"><h2 class="header has-text-advanced">${loc('city_rock_quarry')}</h2></div>`);
         $(`#industry`).append(ratio);
         loadIndustry('rock_quarry',ratio,'#iQuarry');
@@ -103,7 +103,7 @@ export function defineIndustry(){
         loadIndustry('nanite_factory',nanite,'#iNFactory');
     }
     if (global.race['replicator'] && global.tech['replicator']){
-        var replicator = $(`<div id="iReplicator" class="industry"><h2 class="header has-text-advanced">${loc('tech_replicator')}</h2></div>`);
+        var replicator = $(`<div id="iReplicator" class="industry"><h2 class="header has-text-advanced">${global.race.universe === 'antimatter' ? loc('tech_antireplicator') : loc('tech_replicator')}</h2></div>`);
         $(`#industry`).append(replicator);
         loadIndustry('replicator',replicator,'#iReplicator');
     }
@@ -1380,7 +1380,7 @@ function loadAlienSpaceStation(parent,bind){
 
 function loadReplicator(parent,bind){
     if (global.race['replicator']){
-        parent.append($(`<div>${loc('tech_replicator')}</div>`));
+        parent.append($(`<div>${global.race.universe === 'antimatter' ? loc('tech_antireplicator') : loc('tech_replicator')}</div>`));
 
         let content = $(`<div class="doublePane"></div>`);
         parent.append(content);

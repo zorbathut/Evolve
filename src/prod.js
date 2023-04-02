@@ -286,47 +286,47 @@ export function production(id,val){
             switch (val){
                 case 'materials':
                 {
-                    mats = highPopAdjust(global.tech['isolation'] ? 0.12 : 0.09);
+                    mats = global.tech['isolation'] ? 0.12 : 0.09;
                     break;
                 }
                 case 'bolognium':
                 {
-                    mats = highPopAdjust(global.tech['isolation'] ? 0.0288 : 0.0216);
+                    mats = global.tech['isolation'] ? 0.0288 : 0.0216;
                     break;
                 }
                 case 'stone':
                 {
-                    mats = highPopAdjust(global.tech['isolation'] ? 0.8 : 0.6);
+                    mats = global.tech['isolation'] ? 0.8 : 0.6;
                     break;
                 }
                 case 'adamantite':
                 {
-                    mats = highPopAdjust(global.tech['isolation'] ? 0.448 : 0.336);
+                    mats = global.tech['isolation'] ? 0.448 : 0.336;
                     break;
                 }
                 case 'copper':
                 {
-                    mats = highPopAdjust(0.58);
+                    mats = 0.58;
                     break;
                 }
                 case 'coal':
                 {
-                    mats = highPopAdjust(0.13);
+                    mats = 0.13;
                     break;
                 }
                 case 'iron':
                 {
-                    mats = highPopAdjust(0.74);
+                    mats = 0.74;
                     break;
                 }
                 case 'aluminium':
                 {
-                    mats = highPopAdjust(0.88);
+                    mats = 0.88;
                     break;
                 }
                 case 'chrysotile':
                 {
-                    mats = highPopAdjust(1.44);
+                    mats = 1.44;
                     break;
                 }
             }
@@ -431,27 +431,27 @@ export function production(id,val){
             switch (val){
                 case 'iron':
                 {
-                    return 1.85;
+                    return global.tech['isolation'] ? 2.22 : 1.85;
                 }
                 case 'aluminium':
                 {
-                    return 1.85;
+                    return global.tech['isolation'] ? 2.22 : 1.85;
                 }
                 case 'iridium':
                 {
-                    return 0.35;
+                    return global.tech['isolation'] ? 0.42 : 0.35;
                 }
                 case 'neutronium':
                 {
-                    return 0.35;
+                    return global.tech['isolation'] ? 0.42 : 0.35;
                 }
                 case 'orichalcum':
                 {
-                    return 0.25;
+                    return global.tech['isolation'] ? 0.3 : 0.25;
                 }
                 case 'elerium':
                 {
-                    return 0.02;
+                    return global.tech['isolation'] ? 0.024 : 0.02;
                 }
             }
         }
