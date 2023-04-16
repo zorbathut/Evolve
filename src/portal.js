@@ -3448,7 +3448,7 @@ export function drawMechLab(){
             </b-dropdown>`);
         }
 
-        assemble.append(`<div class="mechAssemble"><button class="button is-info" slot="trigger" v-on:click="build()"><span>${loc('portal_mech_construct')}</span></button></div>`);
+        assemble.append(`<div class="mechAssemble"><button class="button is-info" slot="trigger" v-on:click="build()"><span>${loc('portal_mech_construct')}</span></button></div><div>{{ b |damage }}</div>`);
 
         vBind({
             el: '#mechAssembly',
@@ -3628,6 +3628,9 @@ export function drawMechLab(){
                             break;
                     }
                     return loc(`portal_mech_equip_${type}`);
+                },
+                damage(m){
+                    return mechDamageNowVis(m);
                 }
             }
         });
@@ -3682,6 +3685,7 @@ function drawMechs(){
     list.append(`
       <div v-for="(mech, index) of mechs" :key="index" class="mechRow" :class="index < active ? '' : 'inactive-row' ">
         <a class="scrap" @click="scrap(index)">${loc('portal_mech_scrap')}</a>
+        <span> | </span><span>{{ mech | damage }}</span>
         <span> | </span><span>${loc('portal_mech')} #{{index + 1}}: </span>
         <span class="has-text-caution">{{ mech.infernal ? "${loc('portal_mech_infernal')} " : "" }}{{ mech | size }} {{ mech | chassis }}</span>
         <div :class="'gearList '+mech.size">
@@ -3744,6 +3748,9 @@ function drawMechs(){
             },
             chassis(m) {
                 return loc(`portal_mech_chassis_${m.chassis}`);
+            },
+            damage(m) {
+                return mechDamageNowVis(m);
             }
         }
     });
@@ -4352,6 +4359,24 @@ export function mechRating(mech,boss){
     }
 }
 
+export function mechDamageNow(mech) {
+    if (global.portal.hasOwnProperty('waygate') && global.tech.hasOwnProperty('waygate') && global.portal.waygate.on === 1 && global.tech.waygate >= 2 && global.portal.waygate.progress < 100){
+        return mechRating(mech,true);
+    }
+    else {
+        return mechRating(mech,false);
+    }
+}
+
+export function mechDamageNowVis(mech) {
+    if (global.settings.zCheaty) {
+        return Math.round(mechDamageNow(mech) * 1000000);
+    }
+    else
+    {
+        return "";
+    }
+}
 
 export function drawHellObservations(startup){
     if (!global.settings.tabLoad && global.settings.civTabs !== ($(`#mainTabs > nav ul li`).length - 1) && !startup){
