@@ -4364,7 +4364,7 @@ export function mechDamageNow(mech) {
         return mechRating(mech,true);
     }
     else {
-        return mechRating(mech,false);
+        return mechRating(mech,false) * global.portal.spire.count / mechSize(mech.size);
     }
 }
 
