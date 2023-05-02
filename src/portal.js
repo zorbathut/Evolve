@@ -4361,7 +4361,7 @@ export function mechRating(mech,boss){
 
 export function mechDamageNow(mech) {
     if (global.portal.hasOwnProperty('waygate') && global.tech.hasOwnProperty('waygate') && global.portal.waygate.on === 1 && global.tech.waygate >= 2 && global.portal.waygate.progress < 100){
-        return mechRating(mech,true);
+        return mechRating(mech,true) / mechSize(mech.size);;
     }
     else {
         return mechRating(mech,false) * global.portal.spire.count / mechSize(mech.size);
