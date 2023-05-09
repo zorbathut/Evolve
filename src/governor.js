@@ -1132,6 +1132,13 @@ export const gov_tasks = {
         },
         task(){
             if ( $(this)[0].req() ){
+
+                if (global.portal.spire.progress >= 50)
+                {
+                    console.log("too close to done, just saving up gems");
+                    return;
+                }
+
                 let bestval = 0;
                 let bestchoice = {};
 
