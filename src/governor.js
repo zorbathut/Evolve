@@ -1215,9 +1215,17 @@ export const gov_tasks = {
                             }
                         });
 
+                        // this is just so our "includes" test works
+                        prospective.equip[equip] = "";
+                        
                         if (besteqval > mdw)
                         {
                             prospective.equip[equip] = besteq;
+                        }
+                        else if (!prospective.equip.includes('special'))
+                        {
+                            // tends to be very valuable
+                            prospective.equip[equip] = 'special';
                         }
                         else
                         {
