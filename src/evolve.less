@@ -1640,6 +1640,10 @@ Misc ---------> Main template
         .bldQueue {
             scrollbar-color: @webkit-scrollbar-thumb-background @webkit-scrollbar-background;
         }
+
+        .buttonList .is-selected {
+            border-color: @enabled;
+        }
     }
 }
 
@@ -2381,7 +2385,6 @@ a {
     }
     
 }
-
 
 .topPad {
     margin-top: .5rem;
@@ -4146,7 +4149,8 @@ span.inline {
     }
 }
 
-.industryTab {
+.industryTab,
+.psychicTab {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -4161,6 +4165,11 @@ span.inline {
     .header {
         margin-bottom: .25rem;
         padding-bottom: .25rem;
+        width: 100%;
+    }
+
+    .gap {
+        margin-top: .5rem;
         width: 100%;
     }
 }
